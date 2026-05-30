@@ -1,0 +1,94 @@
+name: SEO Manager Orchestration
+description: Manager-as-Coordinator — SEO Manager 在每個 handoff 主動決策，所有產出對齊「半年內提升自然搜尋成效」KPI。細節邏輯在 workflow/seo-flow.md。
+
+error_policy:
+  default: retry_once
+  max_retries: 1
+  on_max_retries: report_gap_to_user
+
+steps:
+  - id: log_start
+    action: shell
+    command: "bash scripts/worklog.sh start seo/manager opus \"$TASK_SUMMARY\" user"
+    output: WORKLOG_FILE
+    on_error: continue
+
+  - id: feedback_detect
+    action: manager_self
+    ref: agents/protocols/workflows/feedback-detect-flow.md
+    note: "偵測 user 回饋語意（正/負面），觸發 memory 保存（標準化流程）。偵測到回饋時先保存 memory 再繼續任務。"
+    on_error: continue
+
+  - id: check_memory
+    action: read_memory
+    path: memory/MEMORY.md
+    on_error: continue
+
+  - id: classify
+    action: inline
+    ref: workflow/seo-flow.md#classify
+    note: "解析 target_site / target_market / seed_topics / output_format / language，套用 KPI Alignment Check 與 Dispatch Granularity（多目標強制拆分）。含回饋偵測收尾。"
+    on_error: report_and_stop
+
+  - id: hitl_gate
+    action: manager_self
+    ref: agents/protocols/hitl-protocol.md
+    note: "依 hitl-protocol.md 判斷風險等級。Tier 3 操作（如建議大幅改動站台結構、刪除既有索引內容）暫停等待 user 嚴格 token confirm / abort / modify。"
+    on_error: report_and_stop
+
+  - id: execute
+    action: dispatch_agents_parallel
+    agents: [seo/keyword-researcher, seo/technical-auditor, shared/researcher]
+    model: sonnet
+    ref: workflow/seo-flow.md#execute
+    inline_verify: agents/protocols/workflows/inline-verify-flow.md
+    verify_note: "每個 worker 返回後立即依 inline-verify-flow.md 逐項驗證聲稱與產出一致，通過才派下一棒；content-strategist 等 keyword 完成後派遣，analytics-reporter 可獨立先行做基線。"
+    note: "平行派遣互不依賴的 worker（keyword + technical audit + 外部研究），後續串接 content-strategist 與 analytics-reporter。"
+    on_error: retry_once
+
+  - id: governance
+    skip_if: no_agent_system_files_modified
+    action: dispatch_agent
+    agent: agent-ops/governance
+    model: opus
+    note: "若任務牽涉修改 agent 系統檔案才觸發；純 SEO 交付通常跳過此步。"
+    on_error: report_and_continue
+
+  - id: verify
+    action: verify_agent_work
+    ref: workflow/synthesis-rules.md
+    note: "驗證 worker 產出的完整性與品質，並確認每項產出可對齊 KPI 面向。"
+    on_error: continue
+
+  - id: synthesize
+    action: merge_results
+    ref: workflow/synthesis-rules.md
+    note: "整合多 worker 結果，加入 KPI 視角，從 deliver 獨立出來。"
+    on_error: partial_report
+
+  - id: deliver
+    action: respond_to_user
+    ref: workflow/seo-flow.md#deliver
+    note: "回報含產出路徑、KPI 對齊說明、行動建議優先序、工時打卡明細表。"
+    on_error: continue
+
+  - id: save_memory
+    action: write_memory
+    path: memory/
+    note: "retrospective：本輪做對什麼 / 做錯什麼 / 下次改進，寫入 memory 並更新 MEMORY.md。"
+    on_error: continue
+
+  - id: log_end
+    action: shell
+    command: "bash scripts/worklog.sh end \"$WORKLOG_FILE\" completed \"$OUTPUT_SUMMARY\""
+    on_error: report_and_stop
+
+references:
+  - workflow/seo-flow.md
+  - workflow/dispatch-protocol.md
+  - workflow/synthesis-rules.md
+  - agents/protocols/worklog-protocol.md
+  - agents/protocols/verification-protocol.md
+  - agents/protocols/hitl-protocol.md
+  - agents/protocols/workflows/feedback-detect-flow.md
+  - agents/protocols/workflows/inline-verify-flow.md

@@ -1,0 +1,65 @@
+name: Technical Auditor Workflow
+description: Worker R-D-V router — Research(audit) → Plan → Execute。完整流程邏輯在 workflow/*.md。
+
+error_policy:
+  default: retry_once
+  max_retries: 1
+  on_max_retries: report_what_was_done_and_what_failed
+
+steps:
+  - id: log_start
+    action: shell
+    command: scripts/worklog.sh start seo/technical-auditor sonnet "技術 SEO 稽核" seo/manager
+    description: 打卡開工（天條），失敗則停止並回報
+    on_error:
+      action: stop_and_report
+      reason: 打卡 start 失敗，不得在未打卡情況下執行任務
+
+  - id: check_memory
+    action: read_file
+    path: agents/seo/technical-auditor/memory/MEMORY.md
+    description: 讀取過去稽核經驗，了解常見技術 SEO 問題模式與站點規模脈絡
+    on_error: continue
+
+  - id: audit
+    action: follow
+    ref: agents/seo/technical-auditor/workflow/audit-flow.md
+    description: "Research 段：抓取與量測目標站點，蒐集可索引性/CWV/Schema/行動/HTTPS/重複內容證據"
+    on_error:
+      action: stop_and_report
+      reason: 稽核資料蒐集失敗，無足夠證據不得產出報告
+
+  - id: plan
+    action: follow
+    ref: agents/seo/technical-auditor/workflow/plan-flow.md
+    description: "Plan 段：將證據整理為問題清單，標記嚴重度並依影響×成本排序"
+    on_error:
+      action: stop_and_report
+      reason: 規劃階段失敗，回報已蒐集的證據與失敗原因
+
+  - id: execute
+    action: follow
+    ref: agents/seo/technical-auditor/workflow/execute-flow.md
+    description: "Execute 段：產出帶嚴重度與優先序的稽核報告，對齊半年自然搜尋 KPI"
+    on_error:
+      action: stop_and_report
+      reason: 報告產出失敗，回報已完成與失敗的步驟
+
+  - id: save_memory
+    action: write_memory
+    path: agents/seo/technical-auditor/memory/MEMORY.md
+    description: 將本次稽核的新發現寫入 memory（常見問題模式、量測技巧、站點脈絡）
+    on_error: continue
+
+  - id: log_end
+    action: shell
+    command: scripts/worklog.sh end "<worklog路徑>" completed "<摘要>"
+    description: 打卡收工（天條），失敗則重試一次後回報
+    on_error: retry_once
+
+references:
+  - agents/seo/technical-auditor/soul.md
+  - agents/seo/technical-auditor/tools.md
+  - agents/seo/technical-auditor/workflow/audit-flow.md
+  - agents/seo/technical-auditor/workflow/plan-flow.md
+  - agents/seo/technical-auditor/workflow/execute-flow.md

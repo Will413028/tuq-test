@@ -1,0 +1,61 @@
+name: Analytics Reporter Workflow
+description: Worker R-D-V router — gather → analyze → report。完整流程邏輯在 workflow/ 各 flow 檔。
+
+error_policy:
+  default: retry_once
+  max_retries: 1
+  on_max_retries: report_what_was_done_and_what_failed
+
+steps:
+  - id: log_start
+    action: shell
+    command: scripts/worklog.sh start seo/analytics-reporter
+    on_error: continue
+
+  - id: check_memory
+    action: read_file
+    path: agents/seo/analytics-reporter/memory/MEMORY.md
+    description: 讀取過去分析經驗（KPI 定義、常見歸因陷阱、已知資料來源限制）
+    on_error: continue
+
+  - id: gather
+    action: follow
+    ref: agents/seo/analytics-reporter/workflow/gather-flow.md
+    description: Research — 蒐集 GSC/GA4/排名原始資料、KPI 目標、報告期間與時間線
+    on_error:
+      action: stop_and_report
+      reason: 資料蒐集失敗或缺 output_path，不得在無資料基礎下產出報告，回報已完成與失敗的步驟
+
+  - id: analyze
+    action: follow
+    ref: agents/seo/analytics-reporter/workflow/analyze-flow.md
+    description: Plan/Analyze — 排名/流量分析、KPI 對齊、歸因、A/B 觀察；精確數值委派 shared/calculator
+    on_error:
+      action: stop_and_report
+      reason: 分析步驟失敗，不得宣告成效結論，回報已完成與失敗的步驟
+
+  - id: report
+    action: follow
+    ref: agents/seo/analytics-reporter/workflow/report-flow.md
+    description: Execute — 產出對齊 KPI 的成效報告，寫入 Manager 傳來的 output_path
+    on_error:
+      action: stop_and_report
+      reason: 報告產出或寫入失敗，回報已完成與失敗的步驟及未驗證數字
+
+  - id: save_memory
+    action: write_memory
+    description: 將本次新發現寫入 memory（新資料來源限制、歸因模式、KPI 對齊技巧）
+    path: agents/seo/analytics-reporter/memory/MEMORY.md
+    on_error: continue
+
+  - id: log_end
+    action: shell
+    command: scripts/worklog.sh end seo/analytics-reporter
+    on_error: retry_once
+
+references:
+  - agents/seo/analytics-reporter/soul.md
+  - agents/seo/analytics-reporter/tools.md
+  - agents/seo/analytics-reporter/workflow/gather-flow.md
+  - agents/seo/analytics-reporter/workflow/analyze-flow.md
+  - agents/seo/analytics-reporter/workflow/report-flow.md

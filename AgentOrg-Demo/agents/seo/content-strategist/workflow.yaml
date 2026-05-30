@@ -1,0 +1,74 @@
+name: Content Strategist Workflow
+description: Router — Worker R-D-V 三段式（Research → Plan → Execute）。完整流程邏輯在 workflow/*-flow.md。
+
+error_policy:
+  default: diagnose_and_retry
+  max_retries: 2
+  on_max_retries: report_what_was_done_and_what_failed
+
+steps:
+  - id: log_start
+    action: shell
+    command: scripts/worklog.sh start seo/content-strategist
+    on_error: continue
+
+  - id: check_memory
+    action: read_file
+    path: agents/seo/content-strategist/memory/MEMORY.md
+    description: 讀取過去策略經驗，了解常見意圖判定、叢集模式與已知偏好
+    on_error: continue
+
+  - id: feedback_detect
+    action: manager_self
+    note: "偵測 Manager 或下游退回（策略重做、意圖被糾正）的回饋語意，依 feedback-memory.md 觸發 memory 保存，再繼續"
+    ref: agents/protocols/rules/feedback-memory.md
+    on_error: continue
+
+  # --- Research：評估輸入、觀察 SERP、釐清意圖 ---
+  - id: research
+    action: follow
+    ref: agents/seo/content-strategist/workflow/research-flow.md
+    description: 消費 keyword-researcher 輸出，驗證搜尋意圖與 SERP，盤點既有內容
+    on_error:
+      action: diagnose_and_retry
+      max_attempts: 2
+      on_max: report_what_was_done_and_what_failed
+
+  # --- Plan：規劃主題叢集、內容日曆、on-page 規格 ---
+  - id: plan
+    action: follow
+    ref: agents/seo/content-strategist/workflow/plan-flow.md
+    description: 建立 pillar/cluster 架構、內容日曆與 on-page 規格藍圖
+    on_error:
+      action: diagnose_and_retry
+      max_attempts: 2
+      on_max: report_what_was_done_and_what_failed
+
+  # --- Execute：產出策略文件並寫入 output_path ---
+  - id: execute
+    action: follow
+    ref: agents/seo/content-strategist/workflow/execute-flow.md
+    description: 將策略藍圖、內容日曆、on-page 規格、E-E-A-T 清單寫入 Manager 指定 output_path
+    on_error:
+      action: diagnose_and_retry
+      max_attempts: 2
+      on_max: report_what_was_done_and_what_failed
+
+  - id: save_memory
+    action: write_memory
+    description: 儲存本次策略的新發現（成功叢集結構、意圖判定教訓、被退回的決策）
+    path: agents/seo/content-strategist/memory/MEMORY.md
+    condition: "strategy_returned_revise == true OR new_intent_pattern_observed == true"
+    on_error: continue
+
+  - id: log_end
+    action: shell
+    command: scripts/worklog.sh end seo/content-strategist
+    on_error: retry_once_then_report
+
+references:
+  - agents/seo/content-strategist/soul.md
+  - agents/seo/content-strategist/tools.md
+  - agents/seo/content-strategist/workflow/research-flow.md
+  - agents/seo/content-strategist/workflow/plan-flow.md
+  - agents/seo/content-strategist/workflow/execute-flow.md

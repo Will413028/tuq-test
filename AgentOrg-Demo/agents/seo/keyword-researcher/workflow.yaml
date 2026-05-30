@@ -1,0 +1,64 @@
+name: Keyword Researcher Workflow
+description: Worker R-D-V Router — Research → Plan → Execute。完整邏輯在 workflow/*.md。
+
+error_policy:
+  default: diagnose_and_retry
+  max_retries: 2
+  on_max_retries: report_what_was_done_and_what_failed
+
+steps:
+  - id: log_start
+    action: shell
+    command: scripts/worklog.sh start seo/keyword-researcher
+    on_error: continue
+
+  - id: check_memory
+    action: read_file
+    path: agents/seo/keyword-researcher/memory/MEMORY.md
+    description: 讀取過去研究經驗，了解已探勘主題、有效搜尋來源與難度判讀基準
+    on_error: continue
+
+  - id: research
+    action: follow
+    ref: agents/seo/keyword-researcher/workflow/research-flow.md
+    description: Research — 解析任務、關鍵字探勘、SERP 與競品蒐集
+    on_error:
+      action: diagnose_and_retry
+      max_attempts: 2
+      on_max: report_what_was_done_and_what_failed
+
+  - id: plan
+    action: follow
+    ref: agents/seo/keyword-researcher/workflow/plan-flow.md
+    description: Plan — 去重、意圖分類、缺口/重疊規劃、長尾叢集、難度評估計畫
+    on_error:
+      action: diagnose_and_retry
+      max_attempts: 2
+      on_max: report_what_was_done_and_what_failed
+
+  - id: execute
+    action: follow
+    ref: agents/seo/keyword-researcher/workflow/execute-flow.md
+    description: Execute — 產出結構化關鍵字地圖並逐項自我驗證
+    on_error:
+      action: diagnose_and_retry
+      max_attempts: 2
+      on_max: report_what_was_done_and_what_failed
+
+  - id: save_memory
+    action: write_memory
+    description: 儲存本次新發現（有效種子來源、SERP 觀察、難度判讀基準、已知盲點）
+    path: agents/seo/keyword-researcher/memory/MEMORY.md
+    on_error: continue
+
+  - id: log_end
+    action: shell
+    command: scripts/worklog.sh end seo/keyword-researcher
+    on_error: continue
+
+references:
+  - agents/seo/keyword-researcher/soul.md
+  - agents/seo/keyword-researcher/tools.md
+  - agents/seo/keyword-researcher/workflow/research-flow.md
+  - agents/seo/keyword-researcher/workflow/plan-flow.md
+  - agents/seo/keyword-researcher/workflow/execute-flow.md
