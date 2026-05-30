@@ -1,15 +1,15 @@
 {
   "agent": "edu/manager",
   "task_id": "2026-05-30_01-27-55-797_edu-manager",
-  "status": "started",
+  "status": "completed",
   "started_at": "2026-05-30T01:27:55Z",
-  "ended_at": null,
-  "duration_seconds": null,
+  "ended_at": "2026-05-30T01:43:02Z",
+  "duration_seconds": 907,
   "model": "sonnet",
   "dispatched_by": "user",
   "trace_id": "27c45618-c943-4a0e-a9f1-e9d3b225e7be",
   "parent_task_id": null,
   "input_summary": "Python 入門 30 分鐘簡報大綱（高中生受眾）",
-  "output_summary": null,
+  "output_summary": "交付 Python 入門 30 分鐘簡報大綱（15 頁），evaluator PASS 92/100",
   "brief": "Python 入門 30 分鐘簡報大綱（高中生受眾）"
 }

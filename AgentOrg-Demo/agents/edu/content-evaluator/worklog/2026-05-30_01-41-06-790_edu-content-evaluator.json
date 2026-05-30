@@ -1,0 +1,15 @@
+{
+  "agent": "edu/content-evaluator",
+  "task_id": "2026-05-30_01-41-06-790_edu-content-evaluator",
+  "status": "completed",
+  "started_at": "2026-05-30T01:41:06Z",
+  "ended_at": "2026-05-30T01:41:39Z",
+  "duration_seconds": 33,
+  "model": "sonnet",
+  "dispatched_by": "edu/manager",
+  "trace_id": "",
+  "parent_task_id": null,
+  "input_summary": "審核 Python 入門 30 分鐘簡報大綱",
+  "output_summary": "裁決 PASS（有條件）：5 維度均達標(受眾5/時間4/認知5/教學法5/結構5)，5段live coding程式碼全部實跑驗證正確。唯一風險為時間略緊(三段live coding+PRIMM+闖關)，建議P05/P11設停損點與壓縮。",
+  "brief": "審核 Python 入門 30 分鐘簡報大綱"
+}
