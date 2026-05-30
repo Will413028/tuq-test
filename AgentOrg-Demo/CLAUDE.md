@@ -51,6 +51,12 @@ AgentOrg-Demo/
 │   ├── doc-generator/       # Generate documentation (pptx / docx)
 │   ├── visual-stylist/      # Visual design and presentation
 │   └── qa-reviewer/         # Quality assurance for content
+├── agents/seo/              # SEO / organic search team (manager reports to user)
+│   ├── manager/             # Orchestrates all SEO work
+│   ├── keyword-researcher/  # Research keywords and search intent
+│   ├── content-strategist/  # Plan SEO content strategy and topic clusters
+│   ├── technical-auditor/   # Audit technical SEO (crawl, indexing, Core Web Vitals)
+│   └── analytics-reporter/  # Report organic search performance and insights
 └── agents/protocols/        # Shared protocols (worklog, memory, scope guard, ...)
 ```
 
@@ -107,12 +113,13 @@ Worklogs land in `agents/{team}/{agent}/worklog/{timestamp}_{agent}.json`.
 
 ## Dispatch Entry Points
 
-In this demo there are **two** entry skills:
+In this demo there are **three** entry skills:
 
 - `/tuq-edu` — All edu / content / training material work
 - `/tuq-agent` — All agent system modification (create / edit / govern agents)
+- `/tuq-seo` — SEO 自然搜尋成效：關鍵字研究、內容策略、技術稽核、成效分析
 
-Type either of these in Claude Code with cwd set to this folder.
+Type any of these in Claude Code with cwd set to this folder.
 
 ## Key Protocols
 

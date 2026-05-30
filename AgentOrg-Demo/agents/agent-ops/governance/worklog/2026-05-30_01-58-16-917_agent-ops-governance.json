@@ -1,0 +1,15 @@
+{
+  "agent": "agent-ops/governance",
+  "task_id": "2026-05-30_01-58-16-917_agent-ops-governance",
+  "status": "started",
+  "started_at": "2026-05-30T01:58:16Z",
+  "ended_at": null,
+  "duration_seconds": null,
+  "model": "opus",
+  "dispatched_by": "agent-ops/manager",
+  "trace_id": "",
+  "parent_task_id": null,
+  "input_summary": "稽核新建 seo team(5 agents)",
+  "output_summary": null,
+  "brief": "稽核新建 seo team(5 agents)"
+}
