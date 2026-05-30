@@ -1,15 +1,15 @@
 {
   "agent": "agent-ops/governance",
   "task_id": "2026-05-30_02-00-23-386_agent-ops-governance",
-  "status": "started",
+  "status": "completed",
   "started_at": "2026-05-30T02:00:23Z",
-  "ended_at": null,
-  "duration_seconds": null,
+  "ended_at": "2026-05-30T02:01:57Z",
+  "duration_seconds": 94,
   "model": "opus",
   "dispatched_by": "agent-ops/manager",
   "trace_id": "",
   "parent_task_id": null,
   "input_summary": "稽核新建 seo team(5 agents)",
-  "output_summary": null,
+  "output_summary": "SEO team(5 agents)稽核完成：6項全PASS/CONCERN無FAIL。Anatomy 5/5 validate PASS；scope無重疊；職責清晰；命名規範正確；CLAUDE.md+雙SKILL.md登錄一致。已知worklog trace_id問題經複核為非阻斷(worker未傳trace_id所致,script已具備欄位)。總裁決APPROVE_WITH_CONDITIONS。",
   "brief": "稽核新建 seo team(5 agents)"
 }
