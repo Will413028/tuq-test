@@ -1,15 +1,15 @@
 {
   "agent": "agent-ops/manager",
   "task_id": "2026-05-30_02-06-17-400_agent-ops-manager",
-  "status": "started",
+  "status": "completed",
   "started_at": "2026-05-30T02:06:17Z",
-  "ended_at": null,
-  "duration_seconds": null,
+  "ended_at": "2026-05-30T02:10:52Z",
+  "duration_seconds": 275,
   "model": "opus",
   "dispatched_by": "user",
   "trace_id": "36335c99-c5df-40b9-8e6d-9a06ea553733",
   "parent_task_id": null,
   "input_summary": "落地 Governance 對 seo team 的 3 項非阻斷修補",
-  "output_summary": null,
+  "output_summary": "Governance 3 項修補全數落地並驗證 5/5 PASS",
   "brief": "落地 Governance 對 seo team 的 3 項非阻斷修補"
 }
