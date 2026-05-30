@@ -1,0 +1,15 @@
+{
+  "agent": "edu/manager",
+  "task_id": "2026-05-30_01-27-55-797_edu-manager",
+  "status": "started",
+  "started_at": "2026-05-30T01:27:55Z",
+  "ended_at": null,
+  "duration_seconds": null,
+  "model": "sonnet",
+  "dispatched_by": "user",
+  "trace_id": "27c45618-c943-4a0e-a9f1-e9d3b225e7be",
+  "parent_task_id": null,
+  "input_summary": "Python 入門 30 分鐘簡報大綱（高中生受眾）",
+  "output_summary": null,
+  "brief": "Python 入門 30 分鐘簡報大綱（高中生受眾）"
+}

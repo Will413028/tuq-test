@@ -1,0 +1,15 @@
+{
+  "agent": "edu/content-designer",
+  "task_id": "2026-05-30_01-30-42-804_edu-content-designer",
+  "status": "completed",
+  "started_at": "2026-05-30T01:30:42Z",
+  "ended_at": "2026-05-30T01:32:34Z",
+  "duration_seconds": 112,
+  "model": "sonnet",
+  "dispatched_by": "edu/manager",
+  "trace_id": "",
+  "parent_task_id": null,
+  "input_summary": "設計 Python 入門 30 分鐘簡報大綱",
+  "output_summary": "完成 Python 入門 30 分鐘簡報大綱(16 頁/總和 30 分):含開場破冰、食譜=程式心智模型(Notional Machine)、4 段 Live Coding(print/變數/input/小應用)附可執行程式碼與預期輸出、1 段 PRIMM 先預測再執行互動、下一步免費資源頁、結尾 CTA。三重焦慮(數學/英文/報錯)逐一拆解。繁中,已標注品牌色指示,口白即講者 notes,可直接交 doc-generator 轉 pptx。",
+  "brief": "設計 Python 入門 30 分鐘簡報大綱"
+}
