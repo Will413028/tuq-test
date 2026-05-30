@@ -9,8 +9,8 @@ error_policy:
 steps:
   - id: log_start
     action: shell
-    command: scripts/worklog.sh start seo/technical-auditor sonnet "技術 SEO 稽核" seo/manager
-    description: 打卡開工（天條），失敗則停止並回報
+    command: bash scripts/worklog.sh start seo/technical-auditor sonnet "$TASK_SUMMARY" seo/manager "$TRACE_ID" "$PARENT_TASK_ID"
+    description: 打卡開工（天條），失敗則停止並回報。trace_id / parent_task_id 由 dispatch prompt 帶入
     on_error:
       action: stop_and_report
       reason: 打卡 start 失敗，不得在未打卡情況下執行任務
@@ -53,7 +53,7 @@ steps:
 
   - id: log_end
     action: shell
-    command: scripts/worklog.sh end "<worklog路徑>" completed "<摘要>"
+    command: bash scripts/worklog.sh end "$WORKLOG_FILE" completed "$OUTPUT_SUMMARY"
     description: 打卡收工（天條），失敗則重試一次後回報
     on_error: retry_once
 

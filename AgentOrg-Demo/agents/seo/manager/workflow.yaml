@@ -43,7 +43,7 @@ steps:
     ref: workflow/seo-flow.md#execute
     inline_verify: agents/protocols/workflows/inline-verify-flow.md
     verify_note: "每個 worker 返回後立即依 inline-verify-flow.md 逐項驗證聲稱與產出一致，通過才派下一棒；content-strategist 等 keyword 完成後派遣，analytics-reporter 可獨立先行做基線。"
-    note: "平行派遣互不依賴的 worker（keyword + technical audit + 外部研究），後續串接 content-strategist 與 analytics-reporter。"
+    note: "平行派遣互不依賴的 worker（keyword + technical audit + 外部研究），後續串接 content-strategist 與 analytics-reporter。content-strategist 與 analytics-reporter 的派遣由 workflow/seo-flow.md#execute 的 execute 表（Round 2 / 串接棒次）定義，並非硬編碼於本步驟 agents 清單；稽核者請以 seo-flow.md execute 表為準，避免誤讀此處 agents 為完整派遣清單。"
     on_error: retry_once
 
   - id: governance

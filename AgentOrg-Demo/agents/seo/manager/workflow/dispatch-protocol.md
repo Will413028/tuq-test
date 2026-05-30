@@ -43,6 +43,7 @@ NOTE:
 - dispatched_by 固定為 "manager"（Manager 自己打卡時傳 "user"，並省略 trace_id/parent_task_id，系統會自動生成 trace_id）。
 - `{trace_id}` = Manager 自己的 trace_id（從 Manager 的 worklog JSON 讀取）。
 - `{parent_task_id}` = Manager 自己的 task_id（從 Manager 的 worklog JSON 讀取）。
+- **⚠️ trace_id 必帶（Governance 修補）**：派遣 worker 時，Manager 的 `trace_id` 與 `parent_task_id` 必須以**位置參數**實際帶入 `worklog.sh start`（欄位本就存在，過往 gap 在未帶入導致同一任務鏈的子 worklog 無法歸戶）。dispatch prompt 不可只留佔位字串而不替換成真值。
 
 ## 3. Memory Block
 

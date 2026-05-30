@@ -1,0 +1,15 @@
+{
+  "agent": "agent-ops/agent-builder",
+  "task_id": "2026-05-30_02-08-46-273_agent-ops-agent-builder",
+  "status": "started",
+  "started_at": "2026-05-30T02:08:46Z",
+  "ended_at": null,
+  "duration_seconds": null,
+  "model": "sonnet",
+  "dispatched_by": "agent-ops/manager",
+  "trace_id": "",
+  "parent_task_id": null,
+  "input_summary": "落地 Governance 對 seo team 3 項修補",
+  "output_summary": null,
+  "brief": "落地 Governance 對 seo team 3 項修補"
+}
