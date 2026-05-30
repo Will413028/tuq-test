@@ -1,0 +1,18 @@
+agent: analytics-reporter
+title: "Analytics Reporter"
+display_name: "成效分析員"
+team: seo
+type: worker
+reports_to: seo/manager
+
+bootstrap:
+  - soul.md
+  - org.md
+  - tools.md
+
+workflow: workflow.yaml
+
+dispatch:
+  model: sonnet
+  trigger: "排名追蹤、自然流量分析、GSC/GA4 報表產出、KPI 對齊半年成長目標、成效歸因、A/B 觀察"
+  not_for: "關鍵字研究（Keyword Researcher）、內容策略規劃（Content Strategist）、技術 SEO 稽核（Technical Auditor）、精確數值計算（shared/calculator）"

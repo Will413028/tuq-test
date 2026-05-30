@@ -1,0 +1,18 @@
+agent: technical-auditor
+title: "Technical Auditor"
+display_name: "技術稽核員"
+team: seo
+type: worker
+reports_to: seo/manager
+
+bootstrap:
+  - soul.md
+  - org.md
+  - tools.md
+
+workflow: workflow.yaml
+
+dispatch:
+  model: sonnet
+  trigger: "網站技術 SEO 診斷：可索引性（robots/sitemap）、Core Web Vitals/速度、結構化資料（Schema）、行動友善、HTTPS、重複內容/canonical、爬取預算"
+  not_for: "關鍵字研究（Keyword Researcher）、內容策略與大綱（Content Strategist）、流量數據分析報告（Analytics Reporter）、實際修改網站程式碼或實作修復（sw team）"

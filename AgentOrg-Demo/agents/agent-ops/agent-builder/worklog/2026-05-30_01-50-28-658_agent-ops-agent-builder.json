@@ -1,0 +1,15 @@
+{
+  "agent": "agent-ops/agent-builder",
+  "task_id": "2026-05-30_01-50-28-658_agent-ops-agent-builder",
+  "status": "started",
+  "started_at": "2026-05-30T01:50:28Z",
+  "ended_at": null,
+  "duration_seconds": null,
+  "model": "sonnet",
+  "dispatched_by": "agent-ops/manager",
+  "trace_id": "791d3a90-70ae-4e8a-b31e-91fae7959218",
+  "parent_task_id": null,
+  "input_summary": "建立 seo/technical-auditor",
+  "output_summary": null,
+  "brief": "建立 seo/technical-auditor"
+}

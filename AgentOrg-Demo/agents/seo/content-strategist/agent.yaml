@@ -1,0 +1,18 @@
+agent: content-strategist
+title: "Content Strategist"
+display_name: "內容策略師"
+team: seo
+type: worker
+reports_to: seo/manager
+
+bootstrap:
+  - soul.md
+  - org.md
+  - tools.md
+
+workflow: workflow.yaml
+
+dispatch:
+  model: sonnet
+  trigger: "規劃主題叢集（topic cluster）、內容日曆、搜尋意圖對應內容、on-page 優化（標題/meta/H 標籤/內鏈）與 E-E-A-T 內容策略；消費 keyword-researcher 的關鍵字資料後產出內容策略藍圖"
+  not_for: "關鍵字探勘與分群（Keyword Researcher）、技術 SEO 稽核（Technical Auditor）、成效數據分析報告（Analytics Reporter）、實際撰寫部落格全文、網站工程實作、agent 系統檔案"
