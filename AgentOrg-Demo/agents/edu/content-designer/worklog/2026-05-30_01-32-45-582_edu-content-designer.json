@@ -1,15 +1,15 @@
 {
   "agent": "edu/content-designer",
   "task_id": "2026-05-30_01-32-45-582_edu-content-designer",
-  "status": "started",
+  "status": "completed",
   "started_at": "2026-05-30T01:32:45Z",
-  "ended_at": null,
-  "duration_seconds": null,
+  "ended_at": "2026-05-30T01:34:43Z",
+  "duration_seconds": 118,
   "model": "sonnet",
   "dispatched_by": "edu/manager",
   "trace_id": "",
   "parent_task_id": null,
   "input_summary": "設計 Python 入門 30 分鐘簡報大綱",
-  "output_summary": null,
+  "output_summary": "完成 Python 入門 30 分鐘簡報大綱(15 頁,繁中):開場破冰3頁+觀念2頁+3段Live Coding(print/變數/input聊天app,含實際demo程式碼與預期輸出)+1段PRIMM先預測再執行互動+下一步免費資源頁+結尾CTA。時間配置總和=30分。對應Bloom學習目標3條,落實Notional Machine/Live Coding/PRIMM教學法,化解怕數學/怕英文/怕報錯三焦慮,刻意略過迴圈函式物件與安裝環境。附brand-colors視覺指示供doc-generator/visual-stylist。",
   "brief": "設計 Python 入門 30 分鐘簡報大綱"
 }

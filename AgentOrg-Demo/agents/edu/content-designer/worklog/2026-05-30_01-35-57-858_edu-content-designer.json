@@ -1,0 +1,15 @@
+{
+  "agent": "edu/content-designer",
+  "task_id": "2026-05-30_01-35-57-858_edu-content-designer",
+  "status": "started",
+  "started_at": "2026-05-30T01:35:57Z",
+  "ended_at": null,
+  "duration_seconds": null,
+  "model": "sonnet",
+  "dispatched_by": "edu/manager",
+  "trace_id": "",
+  "parent_task_id": null,
+  "input_summary": "落檔 Python 入門 30 分鐘簡報大綱",
+  "output_summary": null,
+  "brief": "落檔 Python 入門 30 分鐘簡報大綱"
+}
